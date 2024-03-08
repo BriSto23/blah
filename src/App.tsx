@@ -1,24 +1,54 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import TeamCard from './TeamCard';
+
+function Welcome() {
+  return <h1>College Basketball Teams</h1>;
+}
+
+function Goodbye() {
+  return (
+    <h1>Thanks for checking out the list of these College Basketball Teams!</h1>
+  );
+}
+
+const teamData = require('./CollegeBasketballTeams.json').teams;
+
+interface TeamListProps {
+  tid: number;
+  cid: number;
+  did: number;
+  school: string;
+  name: string;
+  abbrev: string;
+  pop: number;
+  city: string;
+  state: string;
+  latitude: number;
+  longitude: number;
+}
+
+function TeamList() {
+  return (
+    <div>
+      {teamData.map((oneTeam: TeamListProps) => (
+        <TeamCard
+          key={oneTeam.tid}
+          name={oneTeam.school}
+          mascot={oneTeam.name}
+          location={`${oneTeam.city}, ${oneTeam.state}`}
+        />
+      ))}
+    </div>
+  );
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Welcome />
+      <TeamList />
+      <Goodbye />
     </div>
   );
 }
